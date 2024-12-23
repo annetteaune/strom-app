@@ -11,8 +11,8 @@ export default function PriceHighlights({
   mostExpensiveHour,
 }: PriceHighlightsProps) {
   return (
-    <div className="price-highlights">
-      <div>
+    <article className="price-highlights">
+      <section>
         <h3>Billigste time</h3>
         {cheapestHour ? (
           <>
@@ -25,9 +25,9 @@ export default function PriceHighlights({
         ) : (
           <p>Priser ikke tilgjengelig</p>
         )}
-      </div>
+      </section>
 
-      <div>
+      <section>
         <h3>Dyreste time</h3>
         {mostExpensiveHour ? (
           <>
@@ -40,7 +40,7 @@ export default function PriceHighlights({
         ) : (
           <p>Priser ikke tilgjengelig</p>
         )}
-      </div>
-    </div>
+      </section>
+    </article>
   );
 }

@@ -1,0 +1,35 @@
+.price-analysis {
+  background-color: var(--card-bg);
+  @include card-shadow;
+  padding: 1.5rem;
+}
+
+.price-highlights {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-direction: column;
+
+  > section {
+    background-color: var(--bg-primary);
+    padding: 1rem;
+    border-radius: 6px;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 1rem;
+
+    h3 {
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+@media (min-width: 700px) {
+  .price-highlights {
+    flex-direction: row;
+    > section {
+      width: 48%;
+    }
+  }
+}

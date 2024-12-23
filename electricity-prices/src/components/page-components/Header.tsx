@@ -3,8 +3,10 @@ import DarkModeToggle from "./DarkModeToggle";
 export default function Header() {
   return (
     <header>
-      <h1>Dagens strømpriser</h1>
-      <DarkModeToggle />
+      <div className="header-content">
+        <h1>Dagens strømpriser</h1>
+        <DarkModeToggle />
+      </div>
     </header>
   );
 }

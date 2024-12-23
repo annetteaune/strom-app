@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-
 import {
   fetchElectricityPrices,
   canFetchTomorrowsPrices,
@@ -73,9 +72,9 @@ export default function Home() {
 
   return (
     <>
+      <Header />
       <main>
-        <Header />
-        <div className="controls">
+        <section className="controls">
           <AreaSelector
             selectedArea={selectedArea}
             setSelectedArea={setSelectedArea}
@@ -100,13 +99,13 @@ export default function Home() {
               I morgen
             </button>
           </div>
-        </div>
+        </section>
 
         {loading && <p className="loading">Laster inn...</p>}
         {error && <p className="error">{error}</p>}
 
         {!loading && prices.length > 0 && (
-          <div className="price-analysis">
+          <section className="price-analysis">
             <h2>
               Prisanalyse for {selectedArea} - {getDisplayDate()}
             </h2>
@@ -120,7 +119,7 @@ export default function Home() {
               prices={pricesWithPercentages}
               showCurrentHour={selectedDate === "today"}
             />
-          </div>
+          </section>
         )}
       </main>
       <Footer />

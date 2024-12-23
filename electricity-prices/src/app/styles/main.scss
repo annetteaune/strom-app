@@ -1,19 +1,12 @@
 @import "colors.scss";
+@import "mixins.scss";
 @import "footer.scss";
 @import "header.scss";
 @import "darkmode.scss";
 @import "tables.scss";
-
-@mixin flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@mixin card-shadow {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-}
+@import "controls.scss";
+@import "analysis.scss";
+@import "selector.scss";
 
 * {
   box-sizing: border-box;
@@ -44,127 +37,12 @@ h2 {
   padding-bottom: 0.5rem;
 }
 
-.area-selector {
-  @include flex-center;
-  margin-bottom: 1.5rem;
-
-  label {
-    margin-right: 1rem;
-    font-weight: 500;
-  }
-
-  select {
-    padding: 0.5rem;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    background-color: var(--card-color);
-    color: var(--text-primary);
-    outline: none;
-    transition: border-color 0.3s ease;
-
-    &:focus {
-      border-color: var(--accent-blue);
-    }
-  }
-}
-
 .error {
   color: var(--accent-red);
   text-align: center;
   padding: 1rem;
   background-color: var(--o-red);
   border-radius: 4px;
-}
-
-.price-analysis {
-  background-color: var(--card-bg);
-  @include card-shadow;
-  padding: 1.5rem;
-}
-
-.price-highlights {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-
-  > div {
-    background-color: var(--bg-primary);
-    padding: 1rem;
-    border-radius: 6px;
-    text-align: center;
-    width: 48%;
-
-    h3 {
-      color: var(--text-secondary);
-      margin-bottom: 0.5rem;
-    }
-  }
-}
-
-@media (max-width: 600px) {
-  .price-highlights {
-    flex-direction: column;
-
-    > div {
-      width: 100%;
-      margin-bottom: 1rem;
-    }
-  }
-
-  .prices-table {
-    font-size: 0.9rem;
-
-    th,
-    td {
-      padding: 0.5rem;
-    }
-
-    .current-indicator {
-      display: block;
-      margin: 4px auto 0;
-      width: fit-content;
-    }
-  }
-}
-
-.controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.date-selector {
-  display: flex;
-  gap: 0.5rem;
-
-  button {
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    &:hover:not(:disabled) {
-      background-color: var(--text-secondary);
-      color: white;
-    }
-
-    &.active {
-      background-color: var(--text-secondary);
-      color: white;
-      border-color: var(--text-secondary);
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-  }
 }
 
 .loading {

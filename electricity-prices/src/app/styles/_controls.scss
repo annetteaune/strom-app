@@ -1,0 +1,45 @@
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 700px) {
+  .controls {
+    justify-content: space-between !important;
+  }
+}
+
+.date-selector {
+  display: flex;
+  gap: 0.5rem;
+
+  button {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover:not(:disabled) {
+      background-color: rgba(82, 82, 82, 0.438);
+      color: white;
+    }
+
+    &.active {
+      background-color: var(--accent-blue);
+      color: white;
+      border-color: var(--o-blue);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}

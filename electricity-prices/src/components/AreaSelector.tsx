@@ -11,12 +11,13 @@ export default function AreaSelector({
     <div className="area-selector">
       <label htmlFor="area-select">Velg prisområde: </label>
       <select
+        id="area-select"
         value={selectedArea}
         onChange={(e) => setSelectedArea(e.target.value as PriceArea)}
       >
         {PRICE_AREAS.map((area) => (
-          <option key={area} value={area}>
-            {area}
+          <option key={area.code} value={area.code}>
+            {area.name}
           </option>
         ))}
       </select>
