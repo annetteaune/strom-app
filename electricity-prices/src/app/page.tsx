@@ -28,6 +28,7 @@ export default function Home() {
     }
     return format(date, "EEEE d. MMMM yyyy", { locale: nb });
   };
+
   useEffect(() => {
     const fetchPrices = async () => {
       setLoading(true);
@@ -54,7 +55,6 @@ export default function Home() {
         }
       } catch (err) {
         setError("Morgendagens priser kommer ca kl.13:00");
-        console.error(err);
       } finally {
         setLoading(false);
       }

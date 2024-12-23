@@ -17,9 +17,16 @@ export const fetchElectricityPrices = async (
     const response = await axios.get<ElectricityPrice[]>(url);
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response?.status === 404) {
+    // skrive rikke ut errors til console med vilje. 8)
+    if (
+      axios.isAxiosError(error) &&
+      (error.response?.status === 404 ||
+        error.code === "ERR_NETWORK" ||
+        error.message.includes("CORS"))
+    ) {
       return [];
     }
-    throw error;
+
+    return [];
   }
 };
