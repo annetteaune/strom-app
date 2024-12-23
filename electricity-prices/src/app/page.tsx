@@ -6,6 +6,7 @@ import { nb } from "date-fns/locale";
 import {
   fetchElectricityPrices,
   canFetchTomorrowsPrices,
+  getTomorrowAvailabilityMessage,
 } from "./services/electricityPriceService";
 import { ElectricityPrice, PriceArea } from "./types/ElectricityPrice";
 import AreaSelector from "@/components/AreaSelector";
@@ -87,18 +88,23 @@ export default function Home() {
               I dag
             </button>
             <button
-              className={selectedDate === "tomorrow" ? "active" : ""}
-              onClick={() => setSelectedDate("tomorrow")}
+              className={`tomorrow-button ${
+                selectedDate === "tomorrow" ? "active" : ""
+              } ${!canShowTomorrow ? "disabled" : ""}`}
+              onClick={() => {
+                if (canShowTomorrow) {
+                  setSelectedDate("tomorrow");
+                  setError(null);
+                }
+              }}
               disabled={!canShowTomorrow}
-              title={
-                !canShowTomorrow
-                  ? "Morgendagens priser publiseres etter kl. 13:00"
-                  : ""
-              }
+              title={!canShowTomorrow ? getTomorrowAvailabilityMessage() : ""}
             >
               I morgen
             </button>
           </div>
+
+          {error && <p className="error">{error}</p>}
         </section>
 
         {loading && <p className="loading">Laster inn...</p>}

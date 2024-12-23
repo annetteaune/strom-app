@@ -37,9 +37,18 @@
       border-color: var(--o-blue);
     }
 
-    &:disabled {
+    &:disabled,
+    &.disabled {
       opacity: 0.5;
       cursor: not-allowed;
+      background-color: var(--accent-color);
+      border-color: var(--border-color);
+      color: var(--text-primary);
+
+      &:hover {
+        background-color: var(--accent-color);
+        color: var(--text-primary);
+      }
     }
   }
 }
