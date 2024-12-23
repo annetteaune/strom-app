@@ -3,11 +3,7 @@
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import {
-  fetchElectricityPrices,
-  canFetchTomorrowsPrices,
-  getTomorrowAvailabilityMessage,
-} from "./services/electricityPriceService";
+import { fetchElectricityPrices } from "./services/electricityPriceService";
 import { ElectricityPrice, PriceArea } from "./types/ElectricityPrice";
 import AreaSelector from "@/components/AreaSelector";
 import PriceHighlights from "@/components/PriceHighlights";
@@ -25,8 +21,6 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const canShowTomorrow = canFetchTomorrowsPrices();
-
   const getDisplayDate = () => {
     const date = new Date();
     if (selectedDate === "tomorrow") {
@@ -34,7 +28,6 @@ export default function Home() {
     }
     return format(date, "EEEE d. MMMM yyyy", { locale: nb });
   };
-
   useEffect(() => {
     const fetchPrices = async () => {
       setLoading(true);
@@ -48,17 +41,19 @@ export default function Home() {
 
         const prices = await fetchElectricityPrices(date, selectedArea);
 
-        if (prices.length === 0 && selectedDate === "tomorrow") {
-          setError(
-            "Prisene for i morgen er ikke tilgjengelige enda. Prisene publiseres ca kl. 13:00."
-          );
-        } else if (prices.length === 0) {
-          setError("Kunne ikke hente strømpriser");
+        if (prices.length === 0) {
+          if (selectedDate === "tomorrow") {
+            setError("Morgendagens priser kommer ca kl.13:00");
+          } else {
+            setError("Kunne ikke hente strømpriser");
+          }
+          setPrices([]);
         } else {
           setPrices(prices);
+          setError(null);
         }
       } catch (err) {
-        setError("Det oppstod en feil ved henting av strømpriser");
+        setError("Morgendagens priser kommer ca kl.13:00");
         console.error(err);
       } finally {
         setLoading(false);
@@ -88,42 +83,32 @@ export default function Home() {
               I dag
             </button>
             <button
-              className={`tomorrow-button ${
-                selectedDate === "tomorrow" ? "active" : ""
-              } ${!canShowTomorrow ? "disabled" : ""}`}
-              onClick={() => {
-                if (canShowTomorrow) {
-                  setSelectedDate("tomorrow");
-                  setError(null);
-                }
-              }}
-              disabled={!canShowTomorrow}
-              title={!canShowTomorrow ? getTomorrowAvailabilityMessage() : ""}
+              className={selectedDate === "tomorrow" ? "active" : ""}
+              onClick={() => setSelectedDate("tomorrow")}
             >
               I morgen
             </button>
           </div>
-
-          {error && <p className="error">{error}</p>}
         </section>
 
         {loading && <p className="loading">Laster inn...</p>}
         {error && <p className="error">{error}</p>}
 
-        {!loading && prices.length > 0 && (
+        {!loading && !error && prices.length > 0 && (
           <section className="price-analysis">
-            <h2>
-              Prisanalyse for {selectedArea} - {getDisplayDate()}
-            </h2>
+            <div className="content-wrapper">
+              <h2>
+                Prisanalyse for {selectedArea} - {getDisplayDate()}
+              </h2>
+              <PricesTable
+                prices={pricesWithPercentages}
+                showCurrentHour={selectedDate === "today"}
+              />
+            </div>
 
             <PriceHighlights
               cheapestHour={cheapestHour}
               mostExpensiveHour={mostExpensiveHour}
-            />
-
-            <PricesTable
-              prices={pricesWithPercentages}
-              showCurrentHour={selectedDate === "today"}
             />
           </section>
         )}
