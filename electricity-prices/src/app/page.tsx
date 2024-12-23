@@ -8,11 +8,7 @@ import {
   fetchElectricityPrices,
   canFetchTomorrowsPrices,
 } from "./services/electricityPriceService";
-import {
-  ElectricityPrice,
-  PRICE_AREAS,
-  PriceArea,
-} from "./types/ElectricityPrice";
+import { ElectricityPrice, PriceArea } from "./types/ElectricityPrice";
 import AreaSelector from "@/components/AreaSelector";
 import PriceHighlights from "@/components/PriceHighlights";
 import PricesTable from "@/components/PricesTable";
