@@ -4,21 +4,27 @@ import { ElectricityPrice, PriceArea } from "../types/ElectricityPrice";
 const BASE_URL = "https://www.hvakosterstrommen.no/api/v1/prices";
 
 export const fetchElectricityPrices = async (
-  year: number,
-  month: number,
-  day: number,
+  date: Date,
   area: PriceArea
 ): Promise<ElectricityPrice[]> => {
-  const formattedMonth = month.toString().padStart(2, "0");
-  const formattedDay = day.toString().padStart(2, "0");
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
 
-  const url = `${BASE_URL}/${year}/${formattedMonth}-${formattedDay}_${area}.json`;
+  const url = `${BASE_URL}/${year}/${month}-${day}_${area}.json`;
 
   try {
     const response = await axios.get<ElectricityPrice[]>(url);
     return response.data;
   } catch (error) {
-    console.error("Error fetching electricity prices:", error);
+    if (axios.isAxiosError(error) && error.response?.status === 404) {
+      return [];
+    }
     throw error;
   }
+};
+
+export const canFetchTomorrowsPrices = (): boolean => {
+  const now = new Date();
+  return now.getHours() >= 13;
 };

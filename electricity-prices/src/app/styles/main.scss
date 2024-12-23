@@ -1,9 +1,8 @@
-$bg-primary: #f4f4f8;
-$text-primary: #2c3e50;
-$accent-blue: #3498db;
-$accent-green: #2ecc71;
-$accent-red: #e74c3c;
-$border-color: #e0e0e0;
+@import "colors.scss";
+@import "footer.scss";
+@import "header.scss";
+@import "darkmode.scss";
+@import "tables.scss";
 
 @mixin flex-center {
   display: flex;
@@ -25,34 +24,24 @@ $border-color: #e0e0e0;
 }
 
 body {
-  background-color: $bg-primary;
-  color: $text-primary;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   line-height: 1.6;
+  transition: background-color 0.3s ease;
 }
 
 main {
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem 1rem;
-}
-
-h1 {
-  text-align: center;
-  color: $accent-blue;
-  margin-bottom: 1.5rem;
-  font-weight: 600;
+  min-height: 100vh;
 }
 
 h2 {
-  color: $accent-blue;
+  color: var(--text-secondary);
   margin-bottom: 1rem;
-  border-bottom: 2px solid $accent-blue;
+  border-bottom: 2px solid var(--accent-blue);
   padding-bottom: 0.5rem;
-}
-
-.title-sub {
-  text-align: center;
-  padding-bottom: 3rem;
 }
 
 .area-selector {
@@ -66,28 +55,29 @@ h2 {
 
   select {
     padding: 0.5rem;
-    border: 1px solid $border-color;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
-    background-color: white;
+    background-color: var(--card-color);
+    color: var(--text-primary);
     outline: none;
     transition: border-color 0.3s ease;
 
     &:focus {
-      border-color: $accent-blue;
+      border-color: var(--accent-blue);
     }
   }
 }
 
 .error {
-  color: $accent-red;
+  color: var(--accent-red);
   text-align: center;
   padding: 1rem;
-  background-color: rgba($accent-red, 0.1);
+  background-color: var(--o-red);
   border-radius: 4px;
 }
 
 .price-analysis {
-  background-color: white;
+  background-color: var(--card-bg);
   @include card-shadow;
   padding: 1.5rem;
 }
@@ -98,72 +88,15 @@ h2 {
   margin-bottom: 1.5rem;
 
   > div {
-    background-color: $bg-primary;
+    background-color: var(--bg-primary);
     padding: 1rem;
     border-radius: 6px;
     text-align: center;
     width: 48%;
 
     h3 {
-      color: $accent-blue;
+      color: var(--text-secondary);
       margin-bottom: 0.5rem;
-    }
-  }
-}
-
-.prices-table {
-  width: 100%;
-  border-collapse: collapse;
-
-  thead {
-    background-color: $accent-blue;
-    color: white;
-  }
-
-  th,
-  td {
-    padding: 0.75rem;
-    text-align: center;
-    border: 1px solid $border-color;
-  }
-
-  .price-bar {
-    height: 20px;
-    max-width: 100%;
-    min-width: 5%;
-    transition: width 0.5s ease-in-out;
-    border-radius: 4px;
-  }
-
-  tbody {
-    tr {
-      transition: background-color 0.3s ease;
-
-      &:nth-child(even) {
-        background-color: rgba($accent-blue, 0.05);
-      }
-
-      &:hover {
-        background-color: rgba($accent-blue, 0.1);
-      }
-    }
-  }
-
-  .cheapest-hour {
-    background-color: rgba($accent-green, 0.2) !important;
-
-    td {
-      font-weight: bold;
-      color: darken($accent-green, 20%);
-    }
-  }
-
-  .expensive-hour {
-    background-color: rgba($accent-red, 0.2) !important;
-
-    td {
-      font-weight: bold;
-      color: darken($accent-red, 20%);
     }
   }
 }
@@ -185,5 +118,57 @@ h2 {
     td {
       padding: 0.5rem;
     }
+
+    .current-indicator {
+      display: block;
+      margin: 4px auto 0;
+      width: fit-content;
+    }
   }
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.date-selector {
+  display: flex;
+  gap: 0.5rem;
+
+  button {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover:not(:disabled) {
+      background-color: var(--text-secondary);
+      color: white;
+    }
+
+    &.active {
+      background-color: var(--text-secondary);
+      color: white;
+      border-color: var(--text-secondary);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
 }
