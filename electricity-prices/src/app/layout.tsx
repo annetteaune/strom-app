@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./styles/main.scss";
 
 export const metadata: Metadata = {
-  title: "Strøpris",
+  title: "Strømpris",
   description: "Dagens strømpriser",
 };
 
