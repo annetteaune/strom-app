@@ -41,41 +41,55 @@ export default function Home() {
     fetchPrices();
   }, [selectedArea]);
 
-  const findCheapestHour = () => {
-    return prices.reduce((cheapest, current) =>
+  const findCheapestHour = (priceList: ElectricityPrice[]) => {
+    if (priceList.length === 0) return null;
+    return priceList.reduce((cheapest, current) =>
       current.NOK_per_kWh < cheapest.NOK_per_kWh ? current : cheapest
     );
   };
 
-  const findMostExpensiveHour = () => {
-    return prices.reduce((most, current) =>
+  const findMostExpensiveHour = (priceList: ElectricityPrice[]) => {
+    if (priceList.length === 0) return null;
+    return priceList.reduce((most, current) =>
       current.NOK_per_kWh > most.NOK_per_kWh ? current : most
     );
   };
 
-  // prisbarer
   const calculatePriceBarPercentage = () => {
-    const maxPrice = findMostExpensiveHour().NOK_per_kWh;
+    if (prices.length === 0) return [];
 
-    // Ihvis makspris er 1kr eller mindre, 1kr er baseline
-    // Hvis makspris er større enn 1kr, bruk makspris som baseline
+    const cheapestHour = findCheapestHour(prices);
+    const mostExpensiveHour = findMostExpensiveHour(prices);
+
+    // 1 som fallback
+    const maxPrice = mostExpensiveHour?.NOK_per_kWh ?? 1;
+
+    // hvis nmakspris er 1kr eller mindre, er 1kr baseline
+    // ellers er makspris baseline
     const baselinePrice = Math.max(maxPrice, 1);
 
     return prices.map((price) => ({
       ...price,
       pricePercentage: (price.NOK_per_kWh / baselinePrice) * 100,
+      isCheapestHour: cheapestHour
+        ? price.NOK_per_kWh === cheapestHour.NOK_per_kWh
+        : false,
+      isMostExpensiveHour: mostExpensiveHour
+        ? price.NOK_per_kWh === mostExpensiveHour.NOK_per_kWh
+        : false,
     }));
   };
 
   const pricesWithPercentages = calculatePriceBarPercentage();
+  const cheapestHour = findCheapestHour(prices);
+  const mostExpensiveHour = findMostExpensiveHour(prices);
 
   return (
     <main>
-      <h1>Strømpriser i dag</h1>
-      <p className="title-sub">eks. mva, nettleie, avgifter og strømstøtte</p>
+      <h1>Dagens strømpriser</h1>
 
       <div className="area-selector">
-        <label htmlFor="area-select">Prismoråde: </label>
+        <label htmlFor="area-select">Prisområde: </label>
         <select
           id="area-select"
           value={selectedArea}
@@ -99,20 +113,32 @@ export default function Home() {
           <div className="price-highlights">
             <div>
               <h3>Billigste time</h3>
-              <p>
-                {format(parseISO(findCheapestHour().time_start), "HH:mm")} -
-                {format(parseISO(findCheapestHour().time_end), "HH:mm")}
-              </p>
-              <p>{findCheapestHour().NOK_per_kWh.toFixed(2)} NOK/kWh</p>
+              {cheapestHour ? (
+                <>
+                  <p>
+                    {format(parseISO(cheapestHour.time_start), "HH:mm")} -
+                    {format(parseISO(cheapestHour.time_end), "HH:mm")}
+                  </p>
+                  <p>{cheapestHour.NOK_per_kWh.toFixed(2)} NOK/kWh</p>
+                </>
+              ) : (
+                <p>Priser ikke tilgjengelig</p>
+              )}
             </div>
 
             <div>
               <h3>Dyreste time</h3>
-              <p>
-                {format(parseISO(findMostExpensiveHour().time_start), "HH:mm")}{" "}
-                -{format(parseISO(findMostExpensiveHour().time_end), "HH:mm")}
-              </p>
-              <p>{findMostExpensiveHour().NOK_per_kWh.toFixed(2)} NOK/kWh</p>
+              {mostExpensiveHour ? (
+                <>
+                  <p>
+                    {format(parseISO(mostExpensiveHour.time_start), "HH:mm")} -
+                    {format(parseISO(mostExpensiveHour.time_end), "HH:mm")}
+                  </p>
+                  <p>{mostExpensiveHour.NOK_per_kWh.toFixed(2)} NOK/kWh</p>
+                </>
+              ) : (
+                <p>Priser ikke tilgjengelig</p>
+              )}
             </div>
           </div>
 
@@ -129,10 +155,9 @@ export default function Home() {
                 <tr
                   key={index}
                   className={
-                    price.NOK_per_kWh === findCheapestHour().NOK_per_kWh
+                    price.isCheapestHour
                       ? "cheapest-hour"
-                      : price.NOK_per_kWh ===
-                        findMostExpensiveHour().NOK_per_kWh
+                      : price.isMostExpensiveHour
                       ? "expensive-hour"
                       : ""
                   }
@@ -147,13 +172,11 @@ export default function Home() {
                       className="price-bar"
                       style={{
                         width: `${price.pricePercentage}%`,
-                        backgroundColor:
-                          price.NOK_per_kWh === findCheapestHour().NOK_per_kWh
-                            ? "#2ecc71"
-                            : price.NOK_per_kWh ===
-                              findMostExpensiveHour().NOK_per_kWh
-                            ? "#e74c3c"
-                            : "#3498db",
+                        backgroundColor: price.isCheapestHour
+                          ? "#2ecc71"
+                          : price.isMostExpensiveHour
+                          ? "#e74c3c"
+                          : "#3498db",
                       }}
                     ></div>
                   </td>
