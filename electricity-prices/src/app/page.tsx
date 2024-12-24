@@ -53,7 +53,7 @@ export default function Home() {
           setPrices(prices);
           setError(null);
         }
-      } catch (err) {
+      } catch {
         setError("Morgendagens priser kommer ca kl.13:00");
       } finally {
         setLoading(false);
