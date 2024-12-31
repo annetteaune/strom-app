@@ -2,34 +2,59 @@
   background-color: var(--card-bg);
   @include card-shadow;
   padding: 1.5rem;
-}
-
-.price-highlights {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1rem;
-  flex-direction: column;
-
-  > section {
-    background-color: var(--bg-primary);
-    padding: 1rem;
-    border-radius: 6px;
-    text-align: center;
-    width: 100%;
-    margin-bottom: 1rem;
-
-    h3 {
-      color: var(--text-secondary);
-      margin-bottom: 0.5rem;
+  .content-wrapper {
+    h2 {
+      font-size: 1rem;
     }
   }
 }
 
-@media (min-width: 700px) {
-  .price-highlights {
-    flex-direction: row;
-    > section {
-      width: 48%;
+.price-highlights {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  flex-direction: row;
+  gap: 0.2rem;
+  flex-wrap: wrap;
+  .cheapest-hour {
+    background-color: var(--o-green);
+    svg {
+      color: var(--accent-green);
+    }
+  }
+  .current-price {
+    background-color: var(--o-blue);
+    svg {
+      color: #3498db;
+    }
+  }
+  .most-expensive-hour {
+    background-color: var(--o-red);
+    svg {
+      color: var(--accent-red);
+    }
+  }
+
+  section {
+    padding: 0.2rem;
+    border-radius: 6px;
+    text-align: center;
+    width: 32%;
+    min-width: 100px;
+    margin-bottom: 1rem;
+
+    h3 {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.4rem;
+      svg {
+        font-size: 1.3rem;
+      }
+    }
+    p {
+      font-size: 1rem;
     }
   }
 }

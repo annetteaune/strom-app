@@ -98,18 +98,20 @@ export default function Home() {
           <section className="price-analysis">
             <div className="content-wrapper">
               <h2>
-                Prisanalyse for {selectedArea} - {getDisplayDate()}
+                {selectedDate === "today" ? "I dag - " : "I morgen - "}
+                {getDisplayDate()}
               </h2>
+              <PriceHighlights
+                cheapestHour={cheapestHour}
+                mostExpensiveHour={mostExpensiveHour}
+                prices={prices}
+                isTomorrow={selectedDate === "tomorrow"}
+              />
               <PricesTable
                 prices={pricesWithPercentages}
                 showCurrentHour={selectedDate === "today"}
               />
             </div>
-
-            <PriceHighlights
-              cheapestHour={cheapestHour}
-              mostExpensiveHour={mostExpensiveHour}
-            />
           </section>
         )}
       </main>

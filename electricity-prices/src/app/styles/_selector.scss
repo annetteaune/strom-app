@@ -1,6 +1,6 @@
 .area-selector {
   @include flex-center;
-  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
 
   label {
     margin-right: 1rem;

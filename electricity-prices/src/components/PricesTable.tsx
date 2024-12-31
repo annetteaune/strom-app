@@ -33,7 +33,7 @@ export default function PricesTable({
       <thead>
         <tr>
           <th>Tid</th>
-          <th>Pris (NOK/kWh)</th>
+          <th>Pris (kr/kWh)</th>
           <th>Prisnivå</th>
         </tr>
       </thead>
@@ -51,9 +51,8 @@ export default function PricesTable({
               `.trim()}
             >
               <td>
-                {format(parseISO(price.time_start), "HH:mm")} -
-                {format(parseISO(price.time_end), "HH:mm")}
                 {current && <span className="current-indicator">Nå</span>}
+                {format(parseISO(price.time_start), "HH:mm")}
               </td>
               <td>{price.NOK_per_kWh.toFixed(2)}</td>
               <td>

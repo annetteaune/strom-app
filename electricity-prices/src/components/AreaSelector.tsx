@@ -9,7 +9,7 @@ export default function AreaSelector({
 }) {
   return (
     <div className="area-selector">
-      <label htmlFor="area-select">Velg prisområde: </label>
+      <label htmlFor="area-select">Prisområde: </label>
       <select
         id="area-select"
         value={selectedArea}

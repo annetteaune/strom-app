@@ -1,39 +1,27 @@
 header {
-  margin-bottom: 2rem;
-  padding: 2rem 0;
+  padding: 1rem 0;
   background-color: var(--accent-color);
   width: 100%;
   .header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 90%;
+    max-width: 800px;
     margin: 0 auto;
+    padding: 0 1rem;
     h1 {
       width: 90%;
       text-align: left;
       color: var(--text-secondary);
       margin-bottom: 1rem;
       font-weight: 600;
-      font-size: 2.5rem;
+      font-size: 1.5rem;
     }
   }
 }
 
 @media (min-width: 900px) {
-  .header-content {
-    max-width: 80%;
-  }
-}
-
-@media (min-width: 1200px) {
-  .header-content {
-    max-width: 60%;
-  }
-}
-
-@media (min-width: 1900px) {
-  .header-content {
-    max-width: 40%;
+  header {
+    margin-bottom: 2rem;
   }
 }

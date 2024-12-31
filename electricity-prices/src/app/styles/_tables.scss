@@ -6,15 +6,29 @@
   thead {
     background-color: var(--accent-blue);
     color: white;
+    th {
+      &:nth-child(1) {
+        // tid
+        max-width: 15%;
+      }
+      &:nth-child(2) {
+        // pris
+        max-width: 15%;
+      }
+      &:nth-child(3) {
+        // level
+        max-width: 40%;
+      }
+    }
   }
   th,
   td {
-    padding: 0.25rem;
+    padding: 0.1rem;
     text-align: center;
     border: 1px solid var(--border-color);
   }
   .price-bar {
-    height: 20px;
+    height: 12px;
     max-width: 100%;
     min-width: 5%;
     transition: width 0.5s ease-in-out;
@@ -35,34 +49,27 @@
 
   .cheapest-hour {
     background-color: var(--o-green) !important;
-    td {
-      font-weight: bold;
-      color: var(--accent-green);
-    }
   }
 
   .expensive-hour {
     background-color: var(--o-red) !important;
-    td {
-      font-weight: bold;
-    }
   }
   .current-hour {
     position: relative;
     border-left: 4px solid var(--text-secondary);
     td {
-      font-weight: 500;
+      font-weight: bold;
     }
   }
   .current-indicator {
-    display: block;
+    display: inline-block;
     background-color: var(--accent-blue);
     color: white;
     padding: 2px 8px;
     border-radius: 12px;
     font-size: 0.8rem;
     font-weight: normal;
-    margin: 4px auto 0;
+    margin-right: 0.2rem;
     width: fit-content;
   }
 }
