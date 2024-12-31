@@ -6,18 +6,19 @@
   thead {
     background-color: var(--accent-blue);
     color: white;
+    font-size: 0.8rem;
     th {
       &:nth-child(1) {
         // tid
-        max-width: 15%;
+        width: 20%;
       }
       &:nth-child(2) {
         // pris
-        max-width: 15%;
+        width: 20%;
       }
       &:nth-child(3) {
         // level
-        max-width: 40%;
+        width: 60%;
       }
     }
   }
