@@ -74,3 +74,12 @@
     width: fit-content;
   }
 }
+
+@media (min-width: 700px) {
+  .prices-table {
+    font-size: 1rem;
+    thead {
+      font-size: 1rem;
+    }
+  }
+}
