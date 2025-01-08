@@ -12,11 +12,13 @@ interface PriceWithPercentage {
 interface PricesTableProps {
   prices: PriceWithPercentage[];
   showCurrentHour?: boolean;
+  showMVA?: boolean;
 }
 
 export default function PricesTable({
   prices,
   showCurrentHour = true,
+  showMVA = false,
 }: PricesTableProps) {
   const isCurrentHour = (timeStart: string, timeEnd: string) => {
     if (!showCurrentHour) return false;
@@ -26,6 +28,10 @@ export default function PricesTable({
     const end = parseISO(timeEnd);
 
     return isWithinInterval(now, { start, end });
+  };
+
+  const applyMVA = (price: number) => {
+    return showMVA ? price * 1.25 : price;
   };
 
   return (
@@ -54,7 +60,7 @@ export default function PricesTable({
                 {current && <span className="current-indicator">Nå</span>}
                 {format(parseISO(price.time_start), "HH:mm")}
               </td>
-              <td>{price.NOK_per_kWh.toFixed(2)}</td>
+              <td>{applyMVA(price.NOK_per_kWh).toFixed(2)}</td>
               <td>
                 <div
                   className="price-bar"

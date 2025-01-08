@@ -1,9 +1,10 @@
 header {
-  padding: 1rem 0 0.5rem 0;
+  padding: 0.7rem 0;
   background-color: var(--accent-color);
   width: 100%;
   .header-content {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     max-width: 800px;
@@ -11,11 +12,21 @@ header {
     padding: 0 1rem;
     h1 {
       width: 90%;
-      text-align: left;
+      text-align: center;
       color: var(--text-secondary);
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
       font-weight: 600;
       font-size: 1.5rem;
+    }
+    .header-controls {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: center;
+      gap: 1rem;
+      .mva-toggle {
+        margin: 0;
+      }
     }
   }
 }
@@ -23,5 +34,15 @@ header {
 @media (min-width: 900px) {
   header {
     margin-bottom: 2rem;
+    .header-content {
+      flex-direction: row;
+      h1 {
+        margin-bottom: 0;
+        text-align: left;
+      }
+      .header-controls {
+        justify-content: flex-end;
+      }
+    }
   }
 }

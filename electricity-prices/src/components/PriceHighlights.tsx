@@ -9,6 +9,7 @@ interface PriceHighlightsProps {
   mostExpensiveHour: ElectricityPrice | null;
   prices: ElectricityPrice[];
   isTomorrow?: boolean;
+  showMVA?: boolean;
 }
 
 export default function PriceHighlights({
@@ -16,7 +17,12 @@ export default function PriceHighlights({
   mostExpensiveHour,
   prices,
   isTomorrow = false,
+  showMVA = false,
 }: PriceHighlightsProps) {
+  const applyMVA = (price: number) => {
+    return showMVA ? price * 1.25 : price;
+  };
+
   const getCurrentPrice = (prices: ElectricityPrice[]) => {
     if (!prices.length) return null;
 
@@ -46,7 +52,7 @@ export default function PriceHighlights({
         <>
           <h3>
             <BiStats />
-            {averagePrice.toFixed(2)} kr
+            {applyMVA(averagePrice).toFixed(2)} kr
           </h3>
           <p>Gjennomsnitt</p>
         </>
@@ -58,7 +64,7 @@ export default function PriceHighlights({
         <>
           <h3>
             <MdOutlineElectricBolt />
-            {currentPrice.NOK_per_kWh.toFixed(2)} kr
+            {applyMVA(currentPrice.NOK_per_kWh).toFixed(2)} kr
           </h3>
           <p>Nåværende</p>
         </>
@@ -75,7 +81,7 @@ export default function PriceHighlights({
           <>
             <h3>
               <FaArrowTrendDown />
-              {cheapestHour.NOK_per_kWh.toFixed(2)} kr
+              {applyMVA(cheapestHour.NOK_per_kWh).toFixed(2)} kr
             </h3>
             <p>
               {format(parseISO(cheapestHour.time_start), "HH:mm")} -
@@ -94,7 +100,7 @@ export default function PriceHighlights({
           <>
             <h3>
               <FaArrowTrendUp />
-              {mostExpensiveHour.NOK_per_kWh.toFixed(2)} kr
+              {applyMVA(mostExpensiveHour.NOK_per_kWh).toFixed(2)} kr
             </h3>
             <p>
               {format(parseISO(mostExpensiveHour.time_start), "HH:mm")} -

@@ -20,6 +20,7 @@ export default function Home() {
   const [prices, setPrices] = useState<ElectricityPrice[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showMVA, setShowMVA] = useState(true);
 
   const getDisplayDate = () => {
     const date = new Date();
@@ -68,7 +69,7 @@ export default function Home() {
 
   return (
     <>
-      <Header />
+      <Header showMVA={showMVA} setShowMVA={setShowMVA} />
       <main>
         <section className="controls">
           <AreaSelector
@@ -106,16 +107,18 @@ export default function Home() {
                 mostExpensiveHour={mostExpensiveHour}
                 prices={prices}
                 isTomorrow={selectedDate === "tomorrow"}
+                showMVA={showMVA}
               />
               <PricesTable
                 prices={pricesWithPercentages}
                 showCurrentHour={selectedDate === "today"}
+                showMVA={showMVA}
               />
             </div>
           </section>
         )}
       </main>
-      <Footer />
+      <Footer showMVA={showMVA} />
     </>
   );
 }
