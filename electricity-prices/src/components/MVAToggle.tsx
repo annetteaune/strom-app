@@ -11,6 +11,8 @@ const MVAToggle: React.FC<MVAToggleProps> = ({ showMVA, setShowMVA }) => {
   return (
     <div className="mva-toggle" role="group">
       <label className="switch" htmlFor={toggleId}>
+        {" "}
+        <span className="toggle-label">Vis priser inkl. MVA</span>
         <input
           id={toggleId}
           type="checkbox"
@@ -20,7 +22,6 @@ const MVAToggle: React.FC<MVAToggleProps> = ({ showMVA, setShowMVA }) => {
           role="switch"
         />
         <span className="slider" aria-hidden="true"></span>
-        <span className="toggle-label">Vis priser inkl. MVA</span>
       </label>
     </div>
   );
