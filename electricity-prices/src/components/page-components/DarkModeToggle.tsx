@@ -19,13 +19,21 @@ export default function DarkModeToggle() {
     localStorage.setItem("theme", !darkMode ? "dark" : "light");
   };
 
+  const buttonLabel = darkMode ? "Bytt til lys modus" : "Bytt til mørk modus";
+
   return (
     <button
       onClick={toggleDarkMode}
       className="dark-mode-toggle"
-      aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+      aria-label={buttonLabel}
+      aria-pressed={darkMode}
+      title={buttonLabel}
     >
-      {darkMode ? <FiSun className="icon" /> : <FiMoon className="icon" />}
+      {darkMode ? (
+        <FiSun className="icon" aria-hidden="true" />
+      ) : (
+        <FiMoon className="icon" aria-hidden="true" />
+      )}
     </button>
   );
 }

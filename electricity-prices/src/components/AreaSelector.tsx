@@ -8,12 +8,16 @@ export default function AreaSelector({
   setSelectedArea: (area: PriceArea) => void;
 }) {
   return (
-    <div className="area-selector">
-      <label htmlFor="area-select">Prisområde: </label>
+    <div className="area-selector" role="region" aria-label="Velg prisområde">
+      <label htmlFor="area-select" id="area-label">
+        Prisområde:{" "}
+      </label>
       <select
         id="area-select"
         value={selectedArea}
         onChange={(e) => setSelectedArea(e.target.value as PriceArea)}
+        aria-labelledby="area-label"
+        aria-describedby="area-description"
       >
         {PRICE_AREAS.map((area) => (
           <option key={area.code} value={area.code}>
@@ -21,6 +25,9 @@ export default function AreaSelector({
           </option>
         ))}
       </select>
+      <span id="area-description" className="sr-only">
+        Velg ditt strømprisområde for å se gjeldende priser
+      </span>
     </div>
   );
 }
