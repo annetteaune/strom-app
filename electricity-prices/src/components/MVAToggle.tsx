@@ -7,12 +7,14 @@ interface MVAToggleProps {
 
 const MVAToggle: React.FC<MVAToggleProps> = ({ showMVA, setShowMVA }) => {
   const toggleId = "mva-toggle";
+  const toggleText = showMVA
+    ? "Viser priser inkl. MVA"
+    : "Viser priser eks. MVA";
 
   return (
     <div className="mva-toggle" role="group">
       <label className="switch" htmlFor={toggleId}>
-        {" "}
-        <span className="toggle-label">Vis priser inkl. MVA</span>
+        <span className="toggle-label">{toggleText}</span>
         <input
           id={toggleId}
           type="checkbox"
