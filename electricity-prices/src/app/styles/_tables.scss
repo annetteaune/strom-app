@@ -58,6 +58,7 @@
   .current-hour {
     position: relative;
     border-left: 4px solid var(--text-secondary);
+    background-color: var(--o-current) !important;
     td {
       font-weight: bold;
     }
