@@ -30,7 +30,10 @@ export const usePriceAnalysis = (prices: ElectricityPrice[]) => {
 
     return prices.map((price) => ({
       ...price,
-      pricePercentage: (price.NOK_per_kWh / baselinePrice) * 100,
+      pricePercentage:
+        price.NOK_per_kWh <= 0
+          ? 0
+          : Math.max(0, (price.NOK_per_kWh / baselinePrice) * 100),
       isCheapestHour: cheapestHour
         ? price.NOK_per_kWh === cheapestHour.NOK_per_kWh
         : false,
